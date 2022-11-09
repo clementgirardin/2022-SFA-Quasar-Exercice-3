@@ -12,8 +12,10 @@
         v-model="plat.nom"
         label="Nom (Burger)"
         :rules="[
-          val => val.length <= 20 || 'Pas plus de 20 caractères',
-          val => val = !'' || 'Obligation de remplir ce champ']"
+          // test aucune valeur placé avant sinon fonctionne pas
+          val => !!val || 'Obligation de remplir ce champ',
+          val => val.length <= 20 || 'Pas plus de 20 caractères'
+          ]"
         class="col" />
     </div>
 
@@ -79,19 +81,8 @@ export default {
         image: ''
       }
     }
-  },
-
-  methods: {
-    submitForm () {
-      this.$refs.nom.validate()
-      this.$refs.description.validate()
-
-      if (!this.$refs.nom.hasError && !this.$refs.description.hasError) {
-        this.$emit('close')
-        this.sauverPlat()
-      }
-    }
   }
+
 }
 </script>
 
