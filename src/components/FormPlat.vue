@@ -11,11 +11,15 @@
         filled
         v-model="plat.nom"
         label="Nom (Burger)"
+        :rules="[
+          val => val.length <= 20 || 'Pas plus de 20 caractères',
+          val => val = !'' || 'Obligation de remplir ce champ']"
         class="col" />
     </div>
 
     <div class="row q-mb-md">
       <q-input
+        :rules="[val => val.length <= 155 || 'Pas plus de 155 caractères']"
         filled
         v-model="plat.description"
         label="Description"
@@ -55,6 +59,7 @@
       color="grey"
       v-close-popup />
     <q-btn
+      @click="submitForm"
       label="Sauver"
       color="primary"
       v-close-popup />
@@ -72,6 +77,18 @@ export default {
         description: '',
         note: 1,
         image: ''
+      }
+    }
+  },
+
+  methods: {
+    submitForm () {
+      this.$refs.nom.validate()
+      this.$refs.description.validate()
+
+      if (!this.$refs.nom.hasError && !this.$refs.description.hasError) {
+        this.$emit('close')
+        this.sauverPlat()
       }
     }
   }
