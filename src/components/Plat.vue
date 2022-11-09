@@ -33,7 +33,7 @@
       icon="edit"
       color="blue"
       flat>Modifier</q-btn>
-    <q-btn @click="confirmerSuppression"
+    <q-btn @click="confirmerSuppression()"
       icon="delete"
       color="red"
       flat>Supprimer</q-btn>
@@ -41,7 +41,8 @@
 
   <q-dialog
     v-model="afficherFormPlat">
-    <form-plat action="modifier" />
+    <form-plat action="modifier"
+               @close="afficherFormPlat = false"/>
   </q-dialog>
 </q-card>
 </template>
@@ -65,15 +66,23 @@ export default {
     ...mapActions('plats', ['supprimerTache']),
 
     // Ouvre une boite de dialog pour confirmer la suppression
-    confirmerSuppression (id) {
+    confirmerSuppression () {
       this.$q.dialog({
         title: 'Supprimer tâche',
         message: 'Voulez-vous vraiment supprimer ce plat ?',
-        cancel: 'Cancel',
-        ok: 'Delete',
+        cancel: {
+          label: 'Annuler',
+          push: true,
+          color: 'blue'
+        },
+        ok: {
+          label: 'Supprimer',
+          push: true,
+          color: 'red'
+        },
         persistent: true
       }).onOk(() => {
-        this.supprimerTache(id)
+        this.supprimerTache(this.plat.id)
       })
     }
   }
