@@ -34,11 +34,17 @@ const state = {
 }
 
 const mutations = {
-
+  supprimerTache (state, id) {
+    // Filtre les données du tableau
+    // et garde les tâches dont l'id est différent de celui à supprimer
+    state.taches = state.taches.filter(el => el.id !== id)
+  }
 }
 
 const actions = {
-
+  supprimerTache ({ commit }, id) {
+    commit('supprimerTache', id)
+  }
 }
 
 const getters = {
