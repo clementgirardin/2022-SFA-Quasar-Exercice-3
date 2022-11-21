@@ -70,12 +70,12 @@ const actions = {
   addPlat ({ commit }, plat) {
     const newId = uid()
     plat.id = newId
-    commit('ajouterPlat', plat)
+    commit('addPlat', plat)
   },
 
   // Modification plat
   modifPlat ({ commit }, plat) {
-    commit('modifierPlat', plat)
+    commit('modifPlat', plat)
   }
 }
 
