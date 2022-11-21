@@ -1,3 +1,4 @@
+import { uid } from 'quasar'
 
 const state = {
   plats: [
@@ -34,16 +35,47 @@ const state = {
 }
 
 const mutations = {
+
+  // Suppression plat
   supprimerTache (state, id) {
     // Filtre les données du tableau
     // et garde les tâches dont l'id est différent de celui à supprimer
     state.plats = state.plats.filter(el => el.id !== id)
+  },
+
+  // Ajout plat
+  addPlat (state, plat) {
+    state.plats.push(plat)
+  },
+
+  // Modification plat
+  modifPlat (state, plat) {
+    const index = state.plats.findIndex(el => el.id === plat.id)
+    console.log(index, typeof plat.id)
+
+    if (index !== -1) {
+      Object.assign(state.plats[index], plat)
+    }
   }
 }
 
 const actions = {
+
+  // Suppression plat
   supprimerTache ({ commit }, id) {
     commit('supprimerTache', id)
+  },
+
+  // Ajout plat
+  addPlat ({ commit }, plat) {
+    const newId = uid()
+    plat.id = newId
+    commit('ajouterPlat', plat)
+  },
+
+  // Modification plat
+  modifPlat ({ commit }, plat) {
+    commit('modifierPlat', plat)
   }
 }
 

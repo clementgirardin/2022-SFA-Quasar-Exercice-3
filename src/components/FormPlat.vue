@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: ['action'],
   data () {
@@ -81,8 +83,26 @@ export default {
         image: ''
       }
     }
-  }
+  },
+  methods: {
+    ...mapActions('plats', ['addPlat', 'modifPlat']),
+    submitForm () {
+      this.$refs.nom.validate()
+      this.$refs.description.validate()
 
+      if (!this.$refs.nom.hasError && !this.$refs.description.hasError) {
+        this.$emit('close')
+        this.savePlat()
+      }
+    },
+    savePlat () {
+      if (this.action === 'ajouter') {
+        this.addPlat(this.plat)
+      } else {
+        this.modifPlat(this.plat)
+      }
+    }
+  }
 }
 </script>
 
