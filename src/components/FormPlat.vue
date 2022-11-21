@@ -8,6 +8,7 @@
 
     <div class="row q-mb-md">
       <q-input
+        ref="nom"
         filled
         v-model="plat.nom"
         label="Nom (Burger)"
@@ -21,6 +22,7 @@
 
     <div class="row q-mb-md">
       <q-input
+        ref="description"
         :rules="[val => val.length <= 155 || 'Pas plus de 155 caractères']"
         filled
         v-model="plat.description"
@@ -61,10 +63,9 @@
       color="grey"
       v-close-popup />
     <q-btn
-      @click="submitForm"
+      @click="valideForm"
       label="Sauver"
-      color="primary"
-      v-close-popup />
+      color="primary"/>
   </q-card-actions>
 </q-card>
 </template>
@@ -73,7 +74,7 @@
 import { mapActions } from 'vuex'
 
 export default {
-  props: ['action'],
+  props: ['action', 'platAModifier'],
   data () {
     return {
       plat: {
@@ -86,7 +87,7 @@ export default {
   },
   methods: {
     ...mapActions('plats', ['addPlat', 'modifPlat']),
-    submitForm () {
+    valideForm () {
       this.$refs.nom.validate()
       this.$refs.description.validate()
 
@@ -96,11 +97,17 @@ export default {
       }
     },
     savePlat () {
-      if (this.action === 'ajouter') {
+      if (this.action === 'add') {
         this.addPlat(this.plat)
       } else {
         this.modifPlat(this.plat)
       }
+    }
+  },
+
+  mounted () {
+    if (this.action === 'modifier') {
+      this.plat = Object.assign({}, this.platAModifier)
     }
   }
 }

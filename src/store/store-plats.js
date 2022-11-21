@@ -52,7 +52,6 @@ const mutations = {
   modifPlat (state, plat) {
     const index = state.plats.findIndex(el => el.id === plat.id)
     console.log(index, typeof plat.id)
-
     if (index !== -1) {
       Object.assign(state.plats[index], plat)
     }

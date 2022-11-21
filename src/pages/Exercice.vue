@@ -43,7 +43,7 @@ Exercice 3 - Vuex & Formulaires
       v-model="afficherFormPlat">
       <form-plat
         @close="afficherFormPlat = false"
-        action="ajouter" />
+        action="add" />
     </q-dialog>
 
   </div>
